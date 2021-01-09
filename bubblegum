@@ -1,0 +1,26 @@
+public class Bubblegumhw{
+  public static void main (String[] args){
+
+    int count = 0;
+    while ( count < 50){
+
+
+      count = count + 1;
+
+      if ((count % 2 == 0) && (count % 5 == 0)){
+        System.out.println("BUBBLE GUM");
+      }
+      else if (count % 5 == 0){
+        System.out.println("BUBBLE");
+      }
+      else if (count % 2 == 0){
+        System.out.println("GUM");
+      }
+      else {
+        System.out.println(count);
+      }
+
+      }
+
+    }
+  }
