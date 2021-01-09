@@ -1,0 +1,108 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class RandNumGame {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Welcome to the Random Number Game!");
+		System.out.println("Please enter the number of players in this round:");
+		int numberOfPlayers = getAnInt();
+		
+		for(int i = 1 ; i <=numberOfPlayers; i++) {
+			System.out.println("Player  " + i + " Please enter your name: ");
+			Scanner keyboard = new Scanner(System.in);
+			keyboard.nextLine();
+		}
+		
+
+	
+		
+		int z = getRandNum();
+		System.out.println("I’ve chosen a random number for you!");
+		System.out.println("Guess a random number (integers only): ");
+		int a = getAnInt();
+		
+		int attempt = 0;
+		
+		
+		while (a != z) {
+			if (a > z) {
+				System.out.println("**TOO HIGH**");
+				System.out.println(" Guess a random number (integers only!!): " );
+				a = getAnInt();
+				attempt ++;
+			}else if (a < z) {
+				System.out.println("**TOO LOW**");
+				System.out.println(" Guess a random number (integers only!!): " );
+				a = getAnInt();
+				attempt ++;
+			}
+				}
+		if (a == z) {
+			attempt++;
+			System.out.println("**PERFECT**");
+			System.out.println("It took you " + attempt + " guesses to get the right number.");
+			PlayAgain();
+		}
+		
+		
+	}
+	
+	static int getAnInt() {
+		int enteredNumber = 0;
+		Scanner myScanner = new Scanner(System.in);
+		boolean numberError = false;
+		String enteredString = "";
+
+		do {
+			try {
+				enteredString = myScanner.next();  
+				enteredNumber = Integer.parseInt(enteredString.trim());  
+				numberError = false;  
+			} catch(Exception e) {
+				System.out.println("Your entry: \"" + enteredString + "\" is invalid...Please try again");
+				numberError = true; 
+			}
+
+		} while (numberError == true );  
+
+		System.out.println("\nThat was a valid Number.");
+		System.out.println("You entered " + enteredNumber + "!");
+
+		return enteredNumber;
+
+	}
+	
+	static int getRandNum() {
+		Random myRandomNum = new Random();
+		int randNum = myRandomNum.nextInt(100);
+		return randNum;
+	}
+	
+	private static boolean PlayAgain(){
+		while (true){
+          System.out.print("Do you want to play again [Y/N]?");
+          String answer = new Scanner(System.in).nextLine().toUpperCase();
+          if(!answer.equals("Y") && !answer.equals("N")) {
+        	  System.out.print("** Invalid Response...Please enter Y or N **");
+          }
+          else {
+        	  if (answer.equals("Y")){
+            	  RandNumGame variable = new RandNumGame();
+            	  RandNumGame.main(null);
+              }
+              if (answer.equals("N")) {
+              System.out.print("Thanks for playing");
+              return false;
+              }
+        	  
+          }
+         
+		}
+	}
+}
+
