@@ -1,0 +1,58 @@
+public class arrays {
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class InClassArray {
+	
+}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int numOfnumbers = 0;
+		
+		System.out.println("Please enter the number of numbers you want to collect");
+		numOfNumbers = getAnInt();
+		
+		int [] array = new int[numOfNumbers];
+		
+		for (int i=0; i < numofNumbers; i++) { //storing the numbers collected
+			System.out.println("Please enter the number for particular spot number" + (i+1) );
+			
+			array [1]= getAnInt();
+			
+		}
+		for (int = 0; i < array.length; i++) {
+			System.out.println("Number" + (i+1) "is" + array [1]);
+			}
+		
+}
+
+static.int.getAnInt() {
+	int enteredNumber = 0;
+	Scanner myScanner = new Scanner(System.in);
+	boolen numberError = false;
+	String enteredString = "";
+	
+	do {
+		try {
+			System.out.print("Please enter an integer; ");
+			enteredString = myScanner.next(); 
+			enteredNumber = Integer.parseInt(enteredString.trim());
+			numberError = false; 
+			
+		} catch(Exception e) {
+			System.out.println("Your entry input: \"" + enteredString + "\ is invalid..Try again");
+			numberError = true; //looks like we have a problem
+		}
+		
+	} while (numberError == true ); 
+	
+	System.out.println("/nThat was a valid Number.");
+	System.out.println("You entered" + enteredNumber + "!");
+	
+	return enteredNumber;{
+			
+}
+
+
+
