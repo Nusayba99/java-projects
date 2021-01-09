@@ -1,0 +1,50 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class ArrayListOddRemoval {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("How many numbers to enter? ");
+		int n = Integer.parseInt(sc.nextLine().trim());
+		  
+		ArrayList<Integer> list = new ArrayList<>(n);
+		System.out.println("Enter the numbers (one in each line):");
+		for(int i = 0; i < n; i++)
+		list.add(Integer.parseInt(sc.nextLine().trim()));
+		  
+		// prints the original list
+		System.out.println("\nORIGINAL");
+		for(int i = 0; i < list.size(); i++)
+		{
+		System.out.println("arry " + i + " " + list.get(i));
+		}
+		  
+		// remove all the odd numbers from the list and print the list
+		Iterator<Integer> oddIterator = list.iterator();
+		while (oddIterator.hasNext())
+		{
+		int num = oddIterator.next();
+		if(num % 2 != 0)
+		{
+		oddIterator.remove();
+		}
+		}
+		System.out.println("\nAFTER REMOVAL OF ODDS from Array List");
+		for(int i = 0; i < list.size(); i++)
+		{
+		System.out.println("arry " + i + " " + list.get(i));
+		}
+		System.out.println();
+		}
+		}
+
+
+		
+		
+		
+		
+
