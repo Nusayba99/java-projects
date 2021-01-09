@@ -1,0 +1,268 @@
+This is the LOG FILE for Round #1
+
+Player 2 came in Place #1 and won this round with 2 guesses.
+
+Player 2's guesses were: 1 3
+Player 2 had a win rate of 0.5
+
+
+Player 1 came in Place #2 and won this round with 4 guesses.
+
+Player 1's guesses were: 1 2 3 4
+Player 1 had a win rate of 0.25
+
+
+This is the LOG FILE for Round #2
+
+Player 1 came in Place #1 and won this round with 2 guesses.
+
+Player 1's guesses were: 1 2
+
+Player 2 came in Place #2 and won this round with 2 guesses.
+
+Player 2's guesses were: 1 2
+
+This is the LOG FILE for Round #3
+
+Player 1 came in Place #1 and won this round with 3 guesses.
+
+Player 1's guesses were: 2 1 3
+
+Player 2 came in Place #2 and won this round with 3 guesses.
+
+Player 2's guesses were: 2 1 3
+
+This is the LOG FILE for Round #4
+
+Player 1 came in Place #1 and won this round with 3 guesses.
+
+Player 1's guesses were: 1 3 2
+
+Player 2 came in Place #2 and won this round with 3 guesses.
+
+Player 2's guesses were: 2 2 3
+
+import java.io.*;
+import java.util.*;
+
+
+public class RandomNumGame{
+    
+
+    public static int[] gen_random(int num_players){
+        Scanner in = new Scanner(System.in);
+        int[] player_nums = new int[num_players];
+        int range_min;
+        int range_max;
+        System.out.print("Enter the min number for random allocation (positive) : ");
+        range_min = in.nextInt();
+        System.out.print("\nEnter the max number for random allocation (positive ): ");
+        range_max = in.nextInt();
+        Random random = new Random();
+        for(int i=0;i<num_players;i++){
+            player_nums[i] = random.nextInt(range_max + 1 - range_min) + range_min;
+        }
+        return player_nums;
+    }
+   
+    public static int validate_guess(int random_num){
+        Scanner in = new Scanner(System.in);
+        int guess;
+        System.out.print("Enter you guess (positive ): ");
+        guess = in.nextInt();
+        if (guess < random_num){
+            System.out.println("Too Low!!");
+        }
+        else if(guess > random_num){
+            System.out.println("Too High!!");
+        }
+        else if(guess == random_num){
+            System.out.println("CORRECT!!!");
+        }
+       
+        return guess;
+    }
+    
+    public static boolean all_players_win(int[] players){
+        for(int i=0;i<players.length;i++){
+            if(players[i] == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+   
+    public static void print_data(int[] num_guesses , HashMap<Integer , ArrayList<Integer>> responses, int rounds){
+        
+        ArrayList<Integer> rankings = new ArrayList<Integer>();
+
+       
+        for(int i = 0; i<Integer.MAX_VALUE; i++){
+
+           
+            for(Integer index: responses.keySet()){
+                if(responses.get(index).size()==i){
+                    rankings.add(index);
+                }
+            }
+
+           
+            if(rankings.size() >= responses.keySet().size()){
+                break;
+            }
+        }
+
+        for(int i=0;i<rankings.size();i++){
+
+           
+            ArrayList<Integer> guesses = responses.get(rankings.get(i));
+
+        
+            System.out.println("Player "+ (rankings.get(i)+1) + " came in Place #" + (i+1) + " and won this round with " + guesses.size() + " guesses.");
+            System.out.println();
+            System.out.print("Player "+ (rankings.get(i)+1) + "'s guesses were:");
+
+          
+            for(int j = 0; j<guesses.size(); j++){
+                System.out.print(" " + guesses.get(j));
+            }
+            
+            double roundTrack = rounds;
+            double guessTrack = guesses.size();
+            double winRate = roundTrack/guessTrack;
+            System.out.println("\nPlayer "+ (rankings.get(i)+1) + " had a win rate of " + winRate);
+          
+            System.out.println();
+            System.out.println();
+        }
+    }
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Scanner in = new Scanner(System.in);
+        HashMap<Integer, ArrayList<Integer>> responses = new HashMap<Integer, ArrayList<Integer>>();
+        int num_players;
+        System.out.println("How many players : ");
+        num_players = in.nextInt();
+        int players[] = new int[num_players];
+        int num_guesses[] = new int[num_players];
+        for (int i = 0; i < num_players; i++) {
+            players[i] = 0;
+        }
+        int index = 0;
+
+        
+        boolean play = true;
+        int round = 0;
+        while (play) {
+            
+            round++;
+            int[] player_nums = gen_random(num_players);
+            while (!all_players_win(players)) {
+                if (players[index] == 1) {
+                    index += 1;
+                    index %= num_players;
+                    continue;
+                }
+                System.out.println("\nPlayer" + (index+1) + " playing : ");
+                int guess = validate_guess(player_nums[index]);
+
+               
+                if (guess == player_nums[index]) {
+                    players[index] = 1;
+                }
+               
+                if (responses.containsKey(index)) {
+                    ArrayList<Integer> temp = responses.get(index);
+                    temp.add(guess);
+                    responses.put(index, temp);
+                } else {
+                    ArrayList<Integer> response = new ArrayList<Integer>();
+                    response.add(guess);
+                    responses.put(index, response);
+                }
+
+                num_guesses[index] += 1;
+                index += 1;
+                index %= num_players;
+            }
+            print_data(num_guesses, responses, round);
+
+         
+            writeLog(num_guesses,responses,round);
+
+            
+            
+            
+           
+            System.out.println("If paused press Enter");
+            in.nextLine(); //clear the line
+            System.out.println("Play again? (Y/N)");
+            String play_again = in.nextLine();
+            System.out.println();
+
+           
+            if(play_again.equalsIgnoreCase("n")){
+                play = false;
+            }
+            else {
+               for (int i = 0; i < num_players; i++) {
+                  players[i] = 0;
+               }
+            }
+
+        }
+    }
+
+    public static void writeLog(int[] num_guesses , HashMap<Integer , ArrayList<Integer>> responses, int round) throws FileNotFoundException {
+        String filename = "MP_RNG+ROUND_" + round + ".txt";
+        PrintWriter pw = new PrintWriter(new File(filename));
+
+        
+        ArrayList<Integer> rankings = new ArrayList<Integer>();
+
+       
+        for(int i = 0; i<Integer.MAX_VALUE; i++){
+
+            
+            for(Integer index: responses.keySet()){
+                if(responses.get(index).size()==i){
+                    rankings.add(index);
+                }
+            }
+
+           
+            if(rankings.size() >= responses.keySet().size()){
+                break;
+            }
+        }
+
+
+        pw.println("This is the LOG FILE for Round #" + round);
+        pw.println();
+
+        for(int i=0;i<rankings.size();i++){
+
+            
+            ArrayList<Integer> guesses = responses.get(rankings.get(i));
+
+            
+            pw.println("Player "+ (rankings.get(i)+1) + " came in Place #" +(i+1) + " and won this round with " + guesses.size() + " guesses.");
+            pw.println();
+            pw.print("Player "+ (rankings.get(i)+1) + "'s guesses were:");
+
+           
+            for(int j = 0; j<guesses.size(); j++){
+                pw.print(" " + guesses.get(j));
+            }
+         
+            double roundTrack = round;
+            double guessTrack = guesses.size();
+            double winRate = roundTrack/guessTrack;
+            pw.println("\nPlayer "+ (rankings.get(i)+1) + " had a win rate of " + winRate);
+          
+            pw.println();
+            pw.println();
+        }
+        pw.close(); 
+    }
+}
