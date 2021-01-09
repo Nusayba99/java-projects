@@ -1,0 +1,31 @@
+public class homework {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner keyboard = new Scanner (System.in);
+		
+		int Sum = 0;
+		
+		System.out.print("Please enter how many numbers you would like to add together: ");
+		int n = keyboard.nextInt();
+		
+		
+		while(n > 0){
+			System.out.print("Please enter number");
+			int x = keyboard.nextInt();
+			Sum = addNumbers(x,Sum);
+			n = n-1;
+	
+		}
+		
+		System.out.println("The sum of number is " + Sum);
+	}
+		
+		
+
+		static int addNumbers(int x, int y) {
+		int total = x + y;
+		return total;
+		
+		}
